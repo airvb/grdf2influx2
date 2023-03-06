@@ -59,9 +59,9 @@ Résultat dans grafana :
 
 
 
-Je ne suis pas développeur. 
-L’objectif de mes programmes ( des bricoles ), c’est de faire fonctionner le projet. 
-Il y a probablement des quantités d'amélioration possible.
+Je ne suis pas développeur.  
+L’objectif de mes programmes ( des bricoles ), c’est de faire fonctionner le projet.  
+Il y a probablement des quantités d'amélioration possible.  
 
 
 ![This is an image](https://github.com/airvb/grdf2influx2/blob/35c6079d74667543ede6f436df31017d0d43e131/grdf2influx.png)

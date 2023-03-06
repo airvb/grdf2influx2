@@ -19,54 +19,40 @@ from influxdb_client import BucketsService, Bucket, PostBucketRequest
 # openpyxl + csv modules
 import openpyxl
 
-# Création du logguer Chemin  A Adapter 
+# Création du logguer ################### Chemin à adapter #######################
 logging.basicConfig(filename='/home/airvb/grdf2influx/releve.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 print("Début")
 logging.info("Début...")
 
-
-
-#______________________
-
-# Variables à adapter #
-#______________________
-
-# Chemin du fichier excel d'extraction GRDF le plus récent 
-
+# Chemin du fichier excel d'extraction GRDF le plus récent  ################### Chemin à adapter #######################
 inputExcelFile = max(glob.glob('/home/airvb/Téléchargements/Donnees_informatives_*.xlsx'))
 
-# Url serveur influx
-# url="http://localhost:8086" 
-# Doivent déja être créés dans influxdb  
-# orga = 
-# bucket =    
-# token = 
+################### A adapter #######################
 
-
-url="http://192.168.88.150:8086"
-orga = "oNe"
-bucket = "BBB-ESSAI"
-token = "kEV_VEFOkmAEm2NIG2qQKmZc9Er-modcxG1mHMg5j5BoZa3ysrhKabjlJ6EVupZa60s1et-Ow7WawL2-98J9gQ=="
+url="http://192.168.xx.xxx:8086"
+orga = "XXX"
+bucket = "GRDF"
+token = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 prix_fixe = 0.690 # prix par jour de l'abonnement
 prix_kwh = 0.0833 # prix du kwh
 
-#connexion vers influx
+# connexion vers influx
 client = influxdb_client.InfluxDBClient(
   url=url,
   token=token,
   org=orga
 )
 
-print("Verification connection Influx...", end=" ")
+print("Verification connexion Influx...", end=" ")
 try:
     client.query_api().query(f"from(bucket:\"{bucket}\") |> range(start: -1m) |> limit(n:1)", orga)
 except Exception as e:
     # Erreur de connexion 
     if e.status == 401:
         logging.warning("WARNING Connexion influx non concluante. bucket: " + bucket + " Org:" + orga)
-        print(f"LA connexion à INFLUX n'est pas concluante sur le '{bucket}' "
+        print(f"La connexion à INFLUX n'est pas concluante sur le '{bucket}' "
                         f"ou le token est obsolète.") 
 
         client.close()
@@ -87,7 +73,7 @@ for org in orgs:
         print("Interrogation- Organisation inconnue: " + orga)
         sys.exit()
 
-#vérification bucket existe
+# Vérification bucket existe
 bucket_objects = influxdb_buckets_api.find_buckets()
 
 connected = False
@@ -96,7 +82,6 @@ for x in range ( len(bucket_objects._buckets)) :
         # logging.info('Interrogation- Bucket Ok :'+ bucket)
         connected = True
         break
-
 if connected == False :
     logging.warning('WARNING ARRET Interrogation- Bucket inconnu :' +bucket)
     print("Interrogation- Bucket inconnu: " + bucket)
@@ -111,17 +96,17 @@ query_api = client.query_api()
 print("Ok influx")
 logging.info("Ok influx")
 
-# chargement fichier excel 
+# Chargement fichier excel 
 newWorkbook = openpyxl.load_workbook(inputExcelFile)
 
 # Sheet1 du fichier xcel 
 firstWorksheet = newWorkbook.active
 
-# efface col A
+# Efface col A
 firstWorksheet.delete_cols(1) # colonne A en moins
 # Le n° du pce
 pce =firstWorksheet["D4"].internal_value
-# son alias
+# Son alias
 pce_alias = firstWorksheet["D5"].internal_value
 
 #  on enleve les lignes du début du fichier 
@@ -142,8 +127,6 @@ firstWorksheet["Q1"] = "year" #
 firstWorksheet["R1"] = "pce" #
 firstWorksheet["S1"] = "pce_alias" #
 
-
-
 # calcul du cout pour chaque jour 
 print("Calcul coût")
 logging.info("Calcul coût")
@@ -161,7 +144,7 @@ for row in firstWorksheet.iter_cols(min_row=2, min_col=5,max_row = firstWorkshee
 last_col_value = firstWorksheet.cell(firstWorksheet.max_row, column=1).value
 print("Premiere date du fichier:" , str(firstWorksheet.cell(2, 1).value))
 
-# on interroge le bucket pour retrouver la derniere date enregistrée
+# On interroge le bucket pour retrouver la derniere date enregistrée
 
 query= (f'from(bucket:\"{bucket}\") \
     |> range(start: -90d) \
@@ -171,7 +154,7 @@ query= (f'from(bucket:\"{bucket}\") \
     |> max()')
 result = query_api.query(org=orga, query=query)
 
-if len(result) > 0: # pour eviter si new bucket
+if len(result) > 0: # pour eviter erreur si new bucket
     lastdate = result[0].records[0].values['_time']
     print("Derniere date enregistrée ds influx:" ,lastdate.strftime("%d/%m/%Y"))
     print("Derniere date du fichier d'import : ", firstWorksheet.cell(firstWorksheet.max_row, column=1).value)
@@ -260,7 +243,7 @@ for cell in firstWorksheet["A"]:
                     "time": firstWorksheet.cell(cell.row, column=1).value #Date de relevé
                 }
 
-                # on ajoute ds la bd 
+                # on ajoute ds le bucket 
                 payloads = []
                 payloads.append(payload)
                 write_api.write(bucket=bucket,org=orga,record=payloads) 

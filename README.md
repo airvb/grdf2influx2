@@ -55,7 +55,7 @@ Terminé , 0 jours ajoutés.
 ```
 
 Résultat dans grafana :
-![This is an image](https://i.imgur.com/opKxNRE.png)
+![This is an image](https://i.imgur.com/0Ney8HR.png)
 
 
 # Test

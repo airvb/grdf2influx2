@@ -1,37 +1,36 @@
-# grdf2influx2
+# ![This is an image](grdf2influx.png)
 Après récupération manuelle du fichier sur le site GRDF, les données sont transmises dans Influx2.0.
 + Un dashboard Grafana pour les visualiser
 
-Tout ça largement inspiré par ce magnifique travail : [https://github.com/yukulehe/gazpar2mqtt](url)
+Tout ça largement inspiré par [https://github.com/yukulehe/gazpar2mqtt](url) & [https://github.com/m4dm4rtig4n/myelectricaldata](url)
 
-# Information :
+### Information :
 
 Les paramétres à adapter dans le fichier **grdf2influx.py**
-#######################
-# Variables à adapter #
 
-# Chemin du fichier excel d'extraction GRDF le plus récent 
+
+#### Chemin du fichier excel d'extraction GRDF le plus récent 
+
 inputExcelFile = max(glob.glob('**/home/xxxx/Téléchargements**/Donnees_informatives_*.xlsx'))
 
-# Doivent déja être créés dans influxdb  
-# orga = 
-# bucket =    
-# token = 
-
-url="**http://192.168.XXX.XXX:8086**"
-orga = "**XXX**"
-bucket = "**grdf**"
-token = "**EVm2IG2G1mHMg5j52NIG2hKa60s1et-cxFOkG2hKajlJ6EaysrOwWwL2-98J9gQ==**"
+ Doivent déja être créés dans influxdb : org,bucket et token 
+             
+             
+- url="**http://192.168.XXX.XXX:8086**"
+- orga = "**XXX**"
+- bucket = "**grdf**"
+- token = "**EVm2IG2G1mHMg5j52NIG2hKa60s1et-cxFOkG2hKajlJ6EaysrOwWwL2-98J9gQ==**"
 
 prix_fixe = **0.690** # prix par jour de l'abonnement
+
 prix_kwh = **0.0833** # prix du kwh
 
-# Création du logguer Chemin  
+#### Chemin du fihcier log
 logging.basicConfig(filename='**/home/XXXX/Téléchargements/grdf2influx2/releve.log**', level=logging.INFO, format='%(asctime)s %(message)s')
-#######################
 
 
-# Utilisation
+
+#### Utilisation
 Récuperer sur le site https://monespace.grdf.fr la consommation détaillée **par jour**
 
 ![This is an image](https://i.imgur.com/d8V8U8b.png)

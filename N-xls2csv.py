@@ -21,7 +21,7 @@ import openpyxl
 # Variables à adapter #
 
 # Chemin du fichier excel d'extraction GRDF le plus récent 
-inputExcelFile = max(glob.glob('/home/airvb/Téléchargements/Donnees_informatives_*.xlsx'))
+inputExcelFile = max(glob.glob('/home/xxxx/Téléchargements/Donnees_informatives_*.xlsx'))
 
 # Url serveur influx
 # url="http://localhost:8086" 
@@ -30,16 +30,16 @@ inputExcelFile = max(glob.glob('/home/airvb/Téléchargements/Donnees_informativ
 # bucket =    
 # token = 
 
-url="http://192.168.88.150:8086"
-orga = "oNe"
+url="http://xxx.xxx.xxx.xxx:8086"
+orga = "XXX"
 bucket = "grdf"
-token = "kEV_VEFOkmAEm2NIG2qQKmZc9Er-modcxG1mHMg5j5BoZa3ysrhKabjlJ6EVupZa60s1et-Ow7WawL2-98J9gQ=="
+token = "r-modcxG1mHMg5j5BoZa3ysrmodcxG1mHMg5j5BhKr-modcxG1mHMg5j5BWawL2-98J9gQ=="
 
-prix_fixe = 0.690 # prix par jour de l'abonnement
-prix_kwh = 0.0833 # prix du kwh
+prix_fixe = 0.XXX # prix par jour de l'abonnement
+prix_kwh = 0.0XXX # prix du kwh
 
 # Création du logguer Chemin  
-logging.basicConfig(filename='/home/airvb/Téléchargements/old grdf2influx2/releve.log', level=logging.INFO, format='%(asctime)s %(message)s')
+logging.basicConfig(filename='/home/xxxx/log/grdf2influx.log', level=logging.INFO, format='%(asctime)s %(message)s')
 
 #######################
 
@@ -274,4 +274,5 @@ logging.info("Derniere date retenue :" + str(last_col_value))
 logging.info( str(i) + " jours ajoutés" )
 
 print("Terminé ," , i , "jours ajoutés.")
+
 

@@ -7,25 +7,29 @@ Tout ça largement inspiré par ce magnifique travail : [https://github.com/yuku
 # Information :
 
 Les paramétres à adapter dans le fichier **grdf2influx.py**
+#######################
+# Variables à adapter #
 
-### Chemin du fichier excel d'extraction GRDF 
+# Chemin du fichier excel d'extraction GRDF le plus récent 
+inputExcelFile = max(glob.glob('**/home/xxxx/Téléchargements**/Donnees_informatives_*.xlsx'))
 
-inputExcelFile = max(glob.glob('**/home/airvb/Téléchargements**/Donnees_informatives_*.xlsx'))
+# Doivent déja être créés dans influxdb  
+# orga = 
+# bucket =    
+# token = 
 
-### url serveur influx
+url="**http://192.168.XXX.XXX:8086**"
+orga = "**XXX**"
+bucket = "**grdf**"
+token = "**EVm2IG2G1mHMg5j52NIG2hKa60s1et-cxFOkG2hKajlJ6EaysrOwWwL2-98J9gQ==**"
 
-url="**http://192.168.88.150:8086**"
+prix_fixe = **0.690** # prix par jour de l'abonnement
+prix_kwh = **0.0833** # prix du kwh
 
-### Doivent déja être créés dans influxdb 
-orga = "**TEST**"
+# Création du logguer Chemin  
+logging.basicConfig(filename='**/home/XXXX/Téléchargements/grdf2influx2/releve.log**', level=logging.INFO, format='%(asctime)s %(message)s')
+#######################
 
-bucket = "**ESSAI**"
-
-token = "**xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx**"
-
-prix_fixe = **0.720** # prix par jour de l'abonnement
-
-prix_kwh = **0.0942** # prix du kwh
 
 # Utilisation
 Récuperer sur le site https://monespace.grdf.fr la consommation détaillée **par jour**
@@ -64,4 +68,4 @@ L’objectif de mes programmes ( des bricoles ), c’est de faire fonctionner le
 Il y a probablement des quantités d'amélioration possible.  
 
 
-![This is an image](https://github.com/airvb/grdf2influx2/blob/35c6079d74667543ede6f436df31017d0d43e131/grdf2influx.png)
+![This is an image](grdf2influx.png)
